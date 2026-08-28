@@ -1,37 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "index.php", "use": "vercel-php@0.7.3" },
-    { "src": "api.php", "use": "vercel-php@0.7.3" },
-    { "src": "sitemap.php", "use": "vercel-php@0.7.3" },
-    { "src": "pages/*.php", "use": "vercel-php@0.7.3" },
-    { "src": "admin/*.php", "use": "vercel-php@0.7.3" },
-    { "src": "assets/**", "use": "@vercel/static" }
-  ],
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.7.3"
+    }
+  },
   "routes": [
-    { "src": "/assets/(.*)", "dest": "/assets/$1" },
-    { "src": "/may-photocopy", "dest": "/pages/products.php?category=may-photocopy" },
-    { "src": "/may-photocopy-trang-den", "dest": "/pages/products.php?category=may-photocopy-trang-den" },
-    { "src": "/may-photocopy-mau", "dest": "/pages/products.php?category=may-photocopy-mau" },
-    { "src": "/may-photocopy-moi", "dest": "/pages/products.php?category=may-photocopy-moi" },
-    { "src": "/may-kho-lon-a0", "dest": "/pages/products.php?category=may-kho-lon-a0" },
-    { "src": "/cho-thue-may-photocopy", "dest": "/pages/rental.php" },
-    { "src": "/thue-may-trang-den", "dest": "/pages/rental.php?type=bw" },
-    { "src": "/thue-may-mau", "dest": "/pages/rental.php?type=color" },
-    { "src": "/vat-tu-linh-kien", "dest": "/pages/supplies.php" },
-    { "src": "/tin-tuc", "dest": "/pages/news.php" },
-    { "src": "/dich-vu", "dest": "/pages/news.php?category=service" },
-    { "src": "/tai-lieu", "dest": "/pages/news.php?category=guide" },
-    { "src": "/driver", "dest": "/pages/news.php?category=driver" },
-    { "src": "/tin/(.*)", "dest": "/pages/news-detail.php?slug=$1" },
-    { "src": "/lien-he", "dest": "/pages/contact.php" },
-    { "src": "/search", "dest": "/pages/search.php" },
-    { "src": "/tim-kiem", "dest": "/pages/search.php" },
-    { "src": "/(.*?)\\.html", "dest": "/pages/product-detail.php?slug=$1" },
-    { "src": "/admin/(.*)", "dest": "/admin/$1" },
-    { "src": "/admin", "dest": "/admin/index.php" },
-    { "src": "/api.php", "dest": "/api.php" },
-    { "src": "/sitemap.xml", "dest": "/sitemap.php" },
-    { "src": "/(.*)", "dest": "/$1" }
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
   ]
 }

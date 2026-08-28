@@ -200,10 +200,13 @@ function init_sqlite_db($pdo) {
         );
     ");
 
-    // Thêm dữ liệu mặc định
+    // Thêm tài khoản quản trị mặc định (admin / admin123)
+    $admin_hash = password_hash('admin123', PASSWORD_BCRYPT);
+    $stmt_admin = $pdo->prepare("INSERT OR REPLACE INTO admin_users (id, username, password, fullname, email) VALUES (1, 'admin', ?, 'Quản trị viên', 'phuong86.annguyen@gmail.com')");
+    $stmt_admin->execute([$admin_hash]);
+
+    // Thêm dữ liệu danh mục mặc định
     $pdo->exec("
-        INSERT OR IGNORE INTO admin_users (username, password, fullname, email) VALUES
-        ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Quản trị viên', 'phuong86.annguyen@gmail.com');
 
         INSERT OR IGNORE INTO categories (id, name, slug, parent_id, description, icon, sort_order) VALUES
         (1, 'Máy Photocopy', 'may-photocopy', NULL, 'Máy photocopy nhập khẩu chính hãng', 'fa-print', 1),

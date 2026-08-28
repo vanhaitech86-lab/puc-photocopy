@@ -45,8 +45,13 @@ define('ADMIN_PER_PAGE', 20);
 define('PRODUCTS_PER_PAGE', 12);
 define('NEWS_PER_PAGE', 9);
 
-// Session
+// Session Configuration (Path='/' ensures session is preserved across /admin and root)
 if (session_status() === PHP_SESSION_NONE) {
+    if (!headers_sent()) {
+        ini_set('session.cookie_path', '/');
+        ini_set('session.cookie_httponly', '1');
+        ini_set('session.use_only_cookies', '1');
+    }
     session_start();
 }
 

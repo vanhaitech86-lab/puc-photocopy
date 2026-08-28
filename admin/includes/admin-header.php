@@ -1,16 +1,15 @@
 <?php
-session_start();
-require_once '../config.php';
-require_once '../includes/db.php';
-require_once '../includes/functions.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../includes/db.php';
+require_once __DIR__ . '/../../includes/functions.php';
 
 // Check login
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: login.php');
+if (!is_admin_logged_in()) {
+    header('Location: ' . SITE_URL . '/admin/login.php');
     exit;
 }
 
-$current_page = basename($_SERVER['PHP_SELF']);
+$current_page = basename($_SERVER['PHP_SELF'] ?? 'index.php');
 ?>
 <!DOCTYPE html>
 <html lang="vi">

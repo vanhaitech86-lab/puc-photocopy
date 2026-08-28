@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/admin-header.php';
+require_once __DIR__ . '/includes/admin-header.php';
 
 $action = $_GET['action'] ?? 'list';
 $message = '';
@@ -131,4 +131,4 @@ if ($action == 'read' && isset($_GET['id'])) {
     </div>
 <?php endif; endif; ?>
 
-<?php require_once 'includes/admin-footer.php'; ?>
+<?php require_once __DIR__ . '/includes/admin-footer.php'; ?>

@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
 
 if (is_admin_logged_in()) {
-    header('Location: index.php');
+    header('Location: ' . SITE_URL . '/admin/index.php');
     exit;
 }
 
@@ -12,16 +12,16 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $password = trim($_POST['password'] ?? '');
 
     if (empty($username) || empty($password)) {
         $error = 'Vui lòng nhập tài khoản và mật khẩu.';
     } else {
         if (admin_login($username, $password)) {
-            header('Location: index.php');
+            header('Location: ' . SITE_URL . '/admin/index.php');
             exit;
         } else {
-            $error = 'Tài khoản hoặc mật khẩu không chính xác.';
+            $error = 'Tài khoản hoặc mật khẩu không chính xác. Mặc định là: admin / admin123';
         }
     }
 }

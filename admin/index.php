@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/admin-header.php';
+require_once __DIR__ . '/includes/admin-header.php';
 
 // Fetch stats
 $stats = [
@@ -177,4 +177,4 @@ $recent_products = $pdo->query("SELECT p.*, c.name as category_name
     </div>
 </div>
 
-<?php require_once 'includes/admin-footer.php'; ?>
+<?php require_once __DIR__ . '/includes/admin-footer.php'; ?>

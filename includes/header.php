@@ -42,14 +42,29 @@ $page_image = $page_image ?? ($site_url . '/assets/images/logo.png');
 
 <!-- Top Bar -->
 <div class="top-bar">
-    <div class="container">
-        <div class="row align-items-center gy-1">
-            <div class="col-md-8 d-none d-md-block">
-                <span class="me-3"><i class="fas fa-map-marker-alt text-warning me-1"></i> <?= ADDRESS ?></span>
-                <span><i class="fas fa-envelope text-warning me-1"></i> <?= EMAIL ?></span>
+    <div class="container-fluid px-lg-4 px-2">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="top-bar-marquee-wrapper flex-grow-1 overflow-hidden me-2">
+                <div class="top-bar-marquee-content">
+                    <span class="marquee-item me-4">
+                        <i class="fas fa-phone-alt text-warning me-1"></i> <strong>Hotline / Zalo:</strong> <a href="tel:<?= HOTLINE ?>" class="fw-bold text-warning text-decoration-none ms-1"><?= HOTLINE ?></a>
+                    </span>
+                    <span class="marquee-item me-4">
+                        <i class="fas fa-map-marker-alt text-warning me-1"></i> <strong>Địa chỉ:</strong> <span class="ms-1"><?= ADDRESS ?></span>
+                    </span>
+                    <span class="marquee-item me-4">
+                        <i class="fas fa-envelope text-warning me-1"></i> <strong>Email:</strong> <a href="mailto:<?= EMAIL ?>" class="text-white text-decoration-none ms-1"><?= EMAIL ?></a>
+                    </span>
+                    <span class="marquee-item me-4">
+                        <i class="fas fa-clock text-warning me-1"></i> <strong>Giờ làm việc:</strong> <span class="ms-1">T2 - T7: 8:00 - 18:00 (Hỗ trợ kỹ thuật 24/7)</span>
+                    </span>
+                    <span class="marquee-item me-4">
+                        <i class="fas fa-award text-warning me-1"></i> <strong>PUC:</strong> <span class="ms-1 text-info fw-bold">Chuyên Bán & Cho Thuê Máy Photocopy Ricoh, Toshiba, Canon Chính Hãng - Giá Tốt Nhất Hà Nội!</span>
+                    </span>
+                </div>
             </div>
-            <div class="col-md-4 text-md-end text-center">
-                <span class="me-2"><i class="fas fa-clock text-warning me-1"></i> T2-T7: 8:00 - 18:00</span>
+            <div class="top-bar-social d-none d-lg-flex align-items-center flex-shrink-0">
+                <a href="tel:<?= HOTLINE ?>" class="btn btn-sm btn-warning text-dark py-0 px-2 me-3 fw-bold small"><i class="fas fa-phone-alt me-1"></i> <?= HOTLINE ?></a>
                 <a href="https://facebook.com" target="_blank" class="text-white me-2" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://zalo.me/<?= HOTLINE ?>" target="_blank" class="text-white me-2" title="Zalo"><i class="fas fa-comment-dots"></i></a>
                 <a href="https://youtube.com" target="_blank" class="text-white" title="YouTube"><i class="fab fa-youtube"></i></a>

@@ -69,14 +69,48 @@ ul {
 .top-bar {
     background-color: var(--primary-dark);
     color: var(--bg-white);
-    padding: 8px 0;
-    font-size: 0.875rem;
+    padding: 7px 0;
+    font-size: 0.85rem;
+    overflow: hidden;
+    position: relative;
+    z-index: 1050;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .top-bar a {
     color: var(--bg-white);
+    transition: var(--transition);
 }
 .top-bar a:hover {
-    color: #cbd5e1;
+    color: #fef08a;
+}
+.top-bar-marquee-wrapper {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+.top-bar-marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    animation: marqueeLeftToRight 28s linear infinite;
+    cursor: pointer;
+}
+.top-bar-marquee-content:hover {
+    animation-play-state: paused;
+}
+.top-bar-marquee-content .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    padding-right: 15px;
+}
+
+@keyframes marqueeLeftToRight {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* 2. Header */

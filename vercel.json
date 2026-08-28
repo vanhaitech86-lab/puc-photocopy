@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "functions": {
-    "api.php": { "runtime": "vercel-php@0.7.3" },
-    "index.php": { "runtime": "vercel-php@0.7.3" },
-    "sitemap.php": { "runtime": "vercel-php@0.7.3" },
-    "pages/*.php": { "runtime": "vercel-php@0.7.3" },
-    "admin/*.php": { "runtime": "vercel-php@0.7.3" }
-  },
+  "builds": [
+    { "src": "index.php", "use": "vercel-php@0.7.3" },
+    { "src": "api.php", "use": "vercel-php@0.7.3" },
+    { "src": "sitemap.php", "use": "vercel-php@0.7.3" },
+    { "src": "pages/*.php", "use": "vercel-php@0.7.3" },
+    { "src": "admin/*.php", "use": "vercel-php@0.7.3" },
+    { "src": "assets/**", "use": "@vercel/static" }
+  ],
   "routes": [
     { "src": "/assets/(.*)", "dest": "/assets/$1" },
     { "src": "/may-photocopy", "dest": "/pages/products.php?category=may-photocopy" },

@@ -1,20 +1,20 @@
 <?php
 /**
- * Database Connection - PDO with MySQL & SQLite Fallback
+ * Database Connection - PDO with MySQL & SQLite Serverless Fallback
  */
 require_once __DIR__ . '/../config.php';
 
 $pdo = null;
 
-// 1. Thử kết nối MySQL nếu có cấu hình
-if (DB_HOST && DB_NAME) {
+// 1. Thử kết nối MySQL nếu có cấu hình (ví dụ: cPanel hoặc Remote MySQL)
+if (getenv('DB_HOST') && getenv('DB_NAME')) {
     try {
         $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES   => false,
-            PDO::ATTR_TIMEOUT            => 2, // Timeout nhanh nếu không kết nối được
+            PDO::ATTR_TIMEOUT            => 2,
         ];
         $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
     } catch (PDOException $e) {
@@ -22,23 +22,38 @@ if (DB_HOST && DB_NAME) {
     }
 }
 
-// 2. Nếu MySQL không khả dụng (Vercel Serverless / chưa setup DB), dùng SQLite Fallback
+// 2. Fallback SQLite Serverless (hoạt động 100% trên Vercel không cần cấu hình MySQL ngoài)
 if (!$pdo) {
     try {
-        $sqlite_file = __DIR__ . '/../database/puc.sqlite';
-        $is_new = !file_exists($sqlite_file);
+        $temp_dir = sys_get_temp_dir();
+        $sqlite_file = rtrim($temp_dir, '/\\') . DIRECTORY_SEPARATOR . 'puc.sqlite';
+        $bundled_file = __DIR__ . '/../database/puc.sqlite';
         
+        $need_init = !file_exists($sqlite_file) || filesize($sqlite_file) < 100;
+        
+        // Nếu có file đóng gói sẵn, copy sang /tmp
+        if ($need_init && file_exists($bundled_file) && filesize($bundled_file) >= 100) {
+            @copy($bundled_file, $sqlite_file);
+            $need_init = false;
+        }
+
         $pdo = new PDO("sqlite:" . $sqlite_file);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-        // Tạo bảng & dữ liệu mẫu nếu file SQLite mới tạo
-        if ($is_new || filesize($sqlite_file) < 100) {
+        if ($need_init || filesize($sqlite_file) < 100) {
             init_sqlite_db($pdo);
         }
     } catch (Exception $e) {
-        // Mock fallback nếu môi trường readonly
-        die("Không thể kết nối cơ sở dữ liệu. Vui lòng kiểm tra cấu hình trong config.php hoặc biến môi trường.");
+        // Fallback SQLite in-memory nếu hệ thống file bị khóa hoàn toàn
+        try {
+            $pdo = new PDO("sqlite::memory:");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            init_sqlite_db($pdo);
+        } catch (Exception $ex) {
+            die("Lỗi kết nối cơ sở dữ liệu: " . $ex->getMessage());
+        }
     }
 }
 
@@ -228,9 +243,9 @@ function init_sqlite_db($pdo) {
         ('Konica Minolta Bizhub C368 Renew 99%', 'konica-bizhub-c368-renew', 3, 4, 45000000, 39000000, 'Máy photocopy màu Konica Minolta Bizhub C368.', '<h3>Konica Minolta Bizhub C368 Renew 99%</h3><p>Máy photocopy màu đa chức năng Konica Minolta.</p>', '{\"speed\":\"36 bản/phút\",\"paper\":\"A3-A5\",\"memory\":\"4GB RAM\",\"resolution\":\"1800x600 dpi\",\"color\":\"Có\"}', 'uploads/konica-c368.jpg', 'renew', 1, 1);
 
         INSERT OR IGNORE INTO banners (title, image, link, position, sort_order) VALUES
-        ('Khuyến mãi mùa hè', 'uploads/banner1.jpg', '/pages/products.php', 'home_slider', 1),
-        ('Cho thuê máy photocopy', 'uploads/banner2.jpg', '/pages/rental.php', 'home_slider', 2),
-        ('Máy photocopy Ricoh', 'uploads/banner3.jpg', '/pages/products.php?category=may-photocopy-trang-den', 'home_slider', 3);
+        ('Khuyến mãi mùa hè', 'uploads/banner1.jpg', '/may-photocopy', 'home_slider', 1),
+        ('Cho thuê máy photocopy', 'uploads/banner2.jpg', '/cho-thue-may-photocopy', 'home_slider', 2),
+        ('Máy photocopy Ricoh', 'uploads/banner3.jpg', '/may-photocopy-trang-den', 'home_slider', 3);
 
         INSERT OR IGNORE INTO promotions (title, slug, description, discount_type, discount_value, start_date, end_date, is_active) VALUES
         ('Giảm giá mùa hè 2026', 'giam-gia-mua-he-2026', 'Giảm giá lên đến 20% tất cả máy photocopy nhập khẩu', 'percent', 20, '2026-06-01', '2026-12-31', 1),

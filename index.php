@@ -11,51 +11,103 @@ $canonical_url = SITE_URL;
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Hero Banner Slider -->
-<section class="hero-banner">
-    <div class="swiper heroSwiper">
-        <div class="swiper-wrapper">
-            <?php
-            $banners = get_banners('home_slider');
-            if ($banners):
-                foreach ($banners as $banner):
-            ?>
-                <div class="swiper-slide">
-                    <a href="<?= $banner['link'] ?: '#' ?>">
-                        <img src="<?= SITE_URL ?>/assets/<?= $banner['image'] ?>" 
-                             class="d-block w-100" 
-                             alt="<?= htmlspecialchars($banner['title']) ?>"
-                             loading="lazy">
-                    </a>
-                </div>
-            <?php endforeach; else: ?>
-                <div class="swiper-slide">
-                    <div class="banner-placeholder bg-primary d-flex align-items-center justify-content-center" style="min-height:400px;">
-                        <div class="text-center text-white">
-                            <h1 class="display-4 fw-bold">PUC - Máy Photocopy</h1>
-                            <p class="fs-5">Chuyên bán & cho thuê máy photocopy chính hãng</p>
-                            <a href="<?= SITE_URL ?>/may-photocopy" class="btn btn-light btn-lg mt-3">Xem Sản Phẩm</a>
-                        </div>
+<!-- Hero Section: Sidebar Danh Mục Sản Phẩm + Banner Slider -->
+<section class="hero-section py-3">
+    <div class="container">
+        <div class="row g-3">
+            <!-- Cột trái: DANH MỤC SẢN PHẨM (Desktop) -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="card border-0 shadow-sm category-sidebar-menu h-100">
+                    <div class="card-header text-white py-3 fw-bold text-uppercase d-flex align-items-center">
+                        <i class="fas fa-bars me-2"></i> DANH MỤC SẢN PHẨM
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="<?= SITE_URL ?>/may-photocopy-trang-den" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-print text-primary me-3 fa-fw"></i> Máy Photocopy Trắng Đen
+                        </a>
+                        <a href="<?= SITE_URL ?>/may-photocopy-mau" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-palette text-danger me-3 fa-fw"></i> Máy Photocopy Màu
+                        </a>
+                        <a href="<?= SITE_URL ?>/may-photocopy-moi" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-star text-warning me-3 fa-fw"></i> Máy Photocopy Mới 100%
+                        </a>
+                        <a href="<?= SITE_URL ?>/may-kho-lon-a0" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-expand text-info me-3 fa-fw"></i> Máy Khổ Lớn A0
+                        </a>
+                        <a href="<?= SITE_URL ?>/cho-thue-may-photocopy" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-handshake text-success me-3 fa-fw"></i> Cho Thuê Máy Photocopy
+                        </a>
+                        <a href="<?= SITE_URL ?>/may-in" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-file-alt text-secondary me-3 fa-fw"></i> Máy In Văn Phòng
+                        </a>
+                        <a href="<?= SITE_URL ?>/vat-tu-linh-kien" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-cogs text-dark me-3 fa-fw"></i> Vật Tư & Linh Kiện
+                        </a>
+                        <a href="<?= SITE_URL ?>/may-ep-ban-cat" class="list-group-item list-group-item-action d-flex align-items-center py-2 px-3">
+                            <i class="fas fa-cut text-primary me-3 fa-fw"></i> Máy Ép - Bàn Cắt Giấy
+                        </a>
                     </div>
                 </div>
-            <?php endif; ?>
+            </div>
+
+            <!-- Cột phải: Hero Banner Slider -->
+            <div class="col-lg-9 col-12">
+                <div class="swiper heroSwiper rounded overflow-hidden shadow-sm h-100">
+                    <div class="swiper-wrapper">
+                        <?php
+                        $banners = get_banners('home_slider');
+                        if ($banners):
+                            foreach ($banners as $banner):
+                        ?>
+                            <div class="swiper-slide">
+                                <a href="<?= $banner['link'] ?: '#' ?>">
+                                    <img src="<?= SITE_URL ?>/assets/<?= $banner['image'] ?>" 
+                                         class="d-block w-100" 
+                                         style="min-height: 360px; max-height: 400px; object-fit: cover;"
+                                         alt="<?= htmlspecialchars($banner['title']) ?>"
+                                         loading="lazy">
+                                </a>
+                            </div>
+                        <?php endforeach; else: ?>
+                            <div class="swiper-slide">
+                                <div class="banner-placeholder bg-primary d-flex align-items-center justify-content-center" style="min-height:360px;">
+                                    <div class="text-center text-white p-4">
+                                        <h1 class="display-6 fw-bold">PUC - Máy Photocopy</h1>
+                                        <p class="fs-6 mb-3">Chuyên bán & cho thuê máy photocopy chính hãng - Hotline: 0907 586 969</p>
+                                        <a href="<?= SITE_URL ?>/may-photocopy" class="btn btn-warning fw-bold px-4">Xem Sản Phẩm</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
     </div>
 </section>
 
-<!-- Category Icon Grid -->
-<section class="category-section py-4">
+<!-- Khối Icon Grid: DANH MỤC SẢN PHẨM -->
+<section class="category-section py-4 bg-light">
     <div class="container">
-        <div class="cat-grid">
+        <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+            <h2 class="h5 fw-bold text-uppercase mb-0 text-dark">
+                <i class="fas fa-th-large text-primary me-2"></i>DANH MỤC SẢN PHẨM
+            </h2>
+            <a href="<?= SITE_URL ?>/may-photocopy" class="text-primary text-decoration-none small fw-bold">
+                Xem tất cả danh mục <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="category-grid">
             <a href="<?= SITE_URL ?>/may-photocopy-trang-den" class="category-item text-decoration-none">
                 <div class="cat-thumb"><i class="fas fa-print fa-2x text-primary"></i></div>
                 <span class="cat-label">Máy Trắng Đen</span>
             </a>
             <a href="<?= SITE_URL ?>/may-photocopy-mau" class="category-item text-decoration-none">
-                <div class="cat-thumb"><i class="fas fa-palette fa-2x text-primary"></i></div>
+                <div class="cat-thumb"><i class="fas fa-palette fa-2x text-danger"></i></div>
                 <span class="cat-label">Máy Màu</span>
             </a>
             <a href="<?= SITE_URL ?>/may-photocopy-moi" class="category-item text-decoration-none">
@@ -63,19 +115,19 @@ require_once __DIR__ . '/includes/header.php';
                 <span class="cat-label">Máy Mới 100%</span>
             </a>
             <a href="<?= SITE_URL ?>/may-kho-lon-a0" class="category-item text-decoration-none">
-                <div class="cat-thumb"><i class="fas fa-expand fa-2x text-primary"></i></div>
+                <div class="cat-thumb"><i class="fas fa-expand fa-2x text-info"></i></div>
                 <span class="cat-label">Máy Khổ A0</span>
             </a>
             <a href="<?= SITE_URL ?>/cho-thue-may-photocopy" class="category-item text-decoration-none">
                 <div class="cat-thumb"><i class="fas fa-handshake fa-2x text-success"></i></div>
-                <span class="cat-label">Cho Thuê</span>
+                <span class="cat-label">Cho Thuê Máy</span>
             </a>
             <a href="<?= SITE_URL ?>/may-in" class="category-item text-decoration-none">
-                <div class="cat-thumb"><i class="fas fa-file-alt fa-2x text-primary"></i></div>
+                <div class="cat-thumb"><i class="fas fa-file-alt fa-2x text-secondary"></i></div>
                 <span class="cat-label">Máy In</span>
             </a>
             <a href="<?= SITE_URL ?>/vat-tu-linh-kien" class="category-item text-decoration-none">
-                <div class="cat-thumb"><i class="fas fa-cogs fa-2x text-primary"></i></div>
+                <div class="cat-thumb"><i class="fas fa-cogs fa-2x text-dark"></i></div>
                 <span class="cat-label">Vật Tư & LK</span>
             </a>
             <a href="<?= SITE_URL ?>/may-ep-ban-cat" class="category-item text-decoration-none">

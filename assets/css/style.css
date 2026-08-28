@@ -380,38 +380,90 @@ ul {
     border-radius: var(--border-radius-lg);
 }
 
-/* 5. Category Grid */
-.category-grid {
+/* 5. Category Grid & Sidebar Menu */
+.category-sidebar-menu {
+    border: 1px solid #e2e8f0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+.category-sidebar-menu .card-header {
+    background: linear-gradient(135deg, #1e40af, #2563eb);
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+.category-sidebar-menu .list-group-item {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #334155;
+    border-color: #f1f5f9;
+    transition: all 0.2s ease;
+}
+.category-sidebar-menu .list-group-item:hover {
+    background-color: #eff6ff;
+    color: #2563eb;
+    padding-left: 1.25rem !important;
+}
+
+.category-grid, .cat-grid {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     gap: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
-.cat-item {
+@media (max-width: 991px) {
+    .category-grid, .cat-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+}
+@media (max-width: 575px) {
+    .category-grid, .cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
+.cat-item, .category-item, .category-box {
     background: white;
-    border-radius: var(--border-radius);
-    padding: 15px 10px;
+    border-radius: 12px;
+    padding: 16px 8px;
     text-align: center;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition);
-    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.25s ease;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
-.cat-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--primary-color);
+.cat-item:hover, .category-item:hover, .category-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(37,99,235,0.15);
+    border-color: #2563eb;
 }
-.cat-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-    margin-bottom: 10px;
+.cat-thumb, .cat-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    transition: all 0.25s ease;
 }
-.cat-item span {
+.cat-item:hover .cat-thumb, .category-box:hover .cat-icon-wrapper {
+    background: #eff6ff;
+    transform: scale(1.08);
+}
+.cat-label, .cat-title, .cat-item span {
     display: block;
     font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--text-main);
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.2;
+    text-align: center;
 }
 
 /* 6. Product Cards */

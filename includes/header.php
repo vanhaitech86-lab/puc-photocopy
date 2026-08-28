@@ -129,6 +129,13 @@ $page_image = $page_image ?? ($site_url . '/assets/images/logo.png');
 <nav class="main-nav bg-primary text-white d-none d-lg-block">
     <div class="container">
         <ul class="nav-menu d-flex list-unstyled mb-0 align-items-center">
+            <!-- Nút Danh Mục Sản Phẩm nổi bật -->
+            <li class="nav-item">
+                <a class="nav-link fw-bold px-3 text-white d-flex align-items-center" href="<?= $site_url ?>/may-photocopy" style="background: rgba(0, 0, 0, 0.2); border-radius: 4px 4px 0 0;">
+                    <i class="fas fa-bars me-2"></i> DANH MỤC SẢN PHẨM
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link <?= (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'active' : '' ?>" href="<?= $site_url ?>/">
                     <i class="fas fa-home me-1"></i>TRANG CHỦ

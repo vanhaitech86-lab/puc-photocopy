@@ -1,0 +1,85 @@
+RewriteEngine On
+RewriteBase /
+
+# Force HTTPS (bật khi deploy production)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Remove trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# SEO-friendly URLs
+
+# Trang chủ
+RewriteRule ^$ index.php [L]
+
+# Trang sản phẩm theo danh mục
+RewriteRule ^may-photocopy$ pages/products.php?category=may-photocopy [L,QSA]
+RewriteRule ^may-photocopy-trang-den$ pages/products.php?category=may-photocopy-trang-den [L,QSA]
+RewriteRule ^may-photocopy-mau$ pages/products.php?category=may-photocopy-mau [L,QSA]
+RewriteRule ^may-photocopy-moi$ pages/products.php?category=may-photocopy-moi [L,QSA]
+RewriteRule ^may-kho-lon-a0$ pages/products.php?category=may-kho-lon-a0 [L,QSA]
+RewriteRule ^may-in$ pages/products.php?category=may-in [L,QSA]
+RewriteRule ^may-ep-ban-cat$ pages/products.php?category=may-ep-ban-cat [L,QSA]
+
+# Vật tư linh kiện
+RewriteRule ^vat-tu-linh-kien$ pages/supplies.php [L,QSA]
+RewriteRule ^muc-may-photocopy$ pages/supplies.php?category=muc-may-photocopy [L,QSA]
+RewriteRule ^linh-kien-ricoh$ pages/supplies.php?category=linh-kien-ricoh [L,QSA]
+RewriteRule ^linh-kien-toshiba$ pages/supplies.php?category=linh-kien-toshiba [L,QSA]
+RewriteRule ^linh-kien-konica$ pages/supplies.php?category=linh-kien-konica [L,QSA]
+
+# Cho thuê máy photocopy
+RewriteRule ^cho-thue-may-photocopy$ pages/rental.php [L,QSA]
+RewriteRule ^thue-may-trang-den$ pages/rental.php?type=bw [L,QSA]
+RewriteRule ^thue-may-mau$ pages/rental.php?type=color [L,QSA]
+
+# Chi tiết sản phẩm (slug.html)
+RewriteRule ^([a-z0-9\-]+)\.html$ pages/product-detail.php?slug=$1 [L,QSA]
+
+# Tin tức
+RewriteRule ^tin-tuc$ pages/news.php [L,QSA]
+RewriteRule ^dich-vu$ pages/news.php?category=service [L,QSA]
+RewriteRule ^tai-lieu$ pages/news.php?category=guide [L,QSA]
+RewriteRule ^driver$ pages/news.php?category=driver [L,QSA]
+RewriteRule ^tin/([a-z0-9\-]+)$ pages/news-detail.php?slug=$1 [L,QSA]
+
+# Liên hệ
+RewriteRule ^lien-he$ pages/contact.php [L]
+
+# Tìm kiếm
+RewriteRule ^search$ pages/search.php [L,QSA]
+
+# Danh mục tổng quát (fallback - phải đặt cuối)
+RewriteRule ^([a-z0-9\-]+)$ pages/products.php?category=$1 [L,QSA]
+
+# Block access to sensitive files
+<FilesMatch "\.(sql|md|env|log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType application/x-font-woff2 "access plus 1 month"
+</IfModule>
+
+# Gzip compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json application/javascript text/xml application/xml
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

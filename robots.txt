@@ -1,0 +1,21 @@
+# PUC - Máy Photocopy
+# https://puc.vn
+
+User-agent: *
+Allow: /
+
+# Block admin panel
+Disallow: /admin/
+Disallow: /config.php
+Disallow: /includes/
+Disallow: /database/
+
+# Block query params
+Disallow: /*?sort=
+Disallow: /*?page=
+
+# Sitemap
+Sitemap: https://puc.vn/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
